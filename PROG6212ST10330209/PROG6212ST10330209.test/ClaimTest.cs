@@ -27,7 +27,17 @@ namespace PROG6212ST10330209.test
             var notes = claim.Notes;
             Assert.Equal("Additional Notes Submitted", notes);
         }
-      
+        [Fact]
+        public void FileProperties_IsStoredCorrectly()
+        {
+            var claim = new Claim();
+
+            claim.FileName = "invoice.pdf";
+            claim.FilePath = "/uploads/invoice.pdf";
+
+            Assert.Equal("invoice.pdf", claim.FileName);
+            Assert.Equal("/uploads/invoice.pdf", claim.FilePath);
+        }
 
     }
 }
