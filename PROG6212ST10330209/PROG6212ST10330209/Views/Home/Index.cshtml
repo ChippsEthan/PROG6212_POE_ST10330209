@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Welcome to the Contract Monthly Claim System (CMCS)</h1>
+        <p class="lead">Streamlining monthly claim submissions and approvals for Independent Contractor lecturers.</p>
+    </div>
+
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Submit Claims Easily</h5>
+                    <p class="card-text">Lecturers can submit monthly claims with hours worked, description, and supporting documents—all online.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Track Status</h5>
+                    <p class="card-text">Track the status of your claims in real-time—pending, approved, or rejected.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Manager Review</h5>
+                    <p class="card-text">Programme Coordinators and Academic Managers can approve, reject, or provide feedback on claims efficiently.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="text-center">
+        <a class="btn btn-primary btn-lg me-3" href="@Url.Action("Login", "Home")">Login</a>
+
+    </div>
+
+
+    <div class="text-center mt-5 text-muted">
+        <p>CMCS Prototype &copy; 2025 | Designed for PROG6212 Portfolio of Evidence</p>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
+
+    .card-title {
+        font-weight: bold;
+    }
+
+    .card-text {
+        font-size: 14px;
+    }
+</style>

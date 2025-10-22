@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="login-box p-4 shadow rounded" style="background-color:white; width:350px;">
+        <h2 class="text-center mb-3">Login</h2>
+        <input type="text" class="form-control mb-2" placeholder="Username" />
+        <input type="password" class="form-control mb-3" placeholder="Password" />
+        <button class="btn btn-primary w-100 mb-2" onclick="window.location.href='@Url.Action("LecturerDashboard", "Home")'">
+            Login
+        </button>
+
+    </div>
+</div>
+
+
+<style>
+    .login-box {
+        max-width: 350px;
+    }
+
+    input.form-control {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    button.btn {
+        font-size: 16px;
+    }
+</style>
