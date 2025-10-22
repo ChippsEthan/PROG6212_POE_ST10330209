@@ -5,6 +5,9 @@ namespace PROG6212ST10330209.test
 {
     public class ClaimTest
     {
+
+
+
         [Fact]
         public void CalculateTotalAmount()
         {
@@ -27,6 +30,9 @@ namespace PROG6212ST10330209.test
             var notes = claim.Notes;
             Assert.Equal("Additional Notes Submitted", notes);
         }
+
+
+
         [Fact]
         public void FileProperties_IsStoredCorrectly()
         {
