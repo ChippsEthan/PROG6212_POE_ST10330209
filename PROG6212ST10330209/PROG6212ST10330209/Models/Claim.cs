@@ -22,10 +22,13 @@ namespace PROG6212ST10330209.Models
 
         public decimal ClaimAmount => HoursWorked * HourlyRate;
 
-        public decimal CalculateTotal ()
+        public decimal CalculateTotal()
         {
             return HoursWorked * HourlyRate;
         }
+
+        // Add this property for your unit tests
+        public string Notes { get; set; } = string.Empty;
 
         public string Status { get; set; } = "Pending";
 
