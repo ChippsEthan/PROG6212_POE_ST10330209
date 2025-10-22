@@ -18,6 +18,16 @@ namespace PROG6212ST10330209.test
             Assert.Equal(13400, getResult);
         }
 
+        [Fact]
+        public void AdditionalNotes_Simulation()
+        {
+            var claim = new Claim();
+            claim.Notes = "Additional Notes Submitted";
+
+            var notes = claim.Notes;
+            Assert.Equal("Additional Notes Submitted", notes);
+        }
+      
 
     }
 }
