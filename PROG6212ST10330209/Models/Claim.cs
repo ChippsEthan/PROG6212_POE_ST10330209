@@ -3,7 +3,8 @@
 namespace PROG6212ST10330209.Models
 {
     public class Claim
-    {
+    { 
+
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Lecturer name is required")]

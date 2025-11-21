@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lab_services_student\\Desktop\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj": {}
+    "C:\\Users\\lab_services_student\\Desktop\\github upload\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lab_services_student\\Desktop\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj": {
+    "C:\\Users\\lab_services_student\\Desktop\\github upload\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj",
+        "projectUniqueName": "C:\\Users\\lab_services_student\\Desktop\\github upload\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj",
         "projectName": "PROG6212ST10330209",
-        "projectPath": "C:\\Users\\lab_services_student\\Desktop\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj",
+        "projectPath": "C:\\Users\\lab_services_student\\Desktop\\github upload\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.csproj",
         "packagesPath": "C:\\Users\\lab_services_student\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lab_services_student\\Desktop\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209\\obj\\",
+        "outputPath": "C:\\Users\\lab_services_student\\Desktop\\github upload\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

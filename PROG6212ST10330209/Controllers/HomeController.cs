@@ -18,7 +18,7 @@ namespace PROG6212ST10330209.Controllers
             _environment = environment;
         }
 
-        // Updated: Show home page instead of redirecting
+        
         public IActionResult Index()
         {
             return View();
@@ -41,12 +41,12 @@ namespace PROG6212ST10330209.Controllers
             return View(pendingClaims);
         }
 
-        // Active Lecturers Action
+        
         public async Task<IActionResult> ActiveLecturers()
         {
             await EnsureSeedData();
 
-            // Get distinct lecturer names who have submitted claims
+            
             var activeLecturers = _context.Claims
                 .Select(c => c.LecturerName)
                 .Distinct()
@@ -57,7 +57,7 @@ namespace PROG6212ST10330209.Controllers
             return View();
         }
 
-        // HR Dashboard for Report Generation
+       
         public async Task<IActionResult> HRDashboard()
         {
             await EnsureSeedData();
@@ -67,7 +67,7 @@ namespace PROG6212ST10330209.Controllers
                 .OrderByDescending(c => c.SubmissionDate)
                 .ToList();
 
-            // Calculate totals for reporting
+            
             ViewBag.TotalApprovedAmount = approvedClaims.Sum(c => c.ClaimAmount);
             ViewBag.TotalApprovedClaims = approvedClaims.Count;
             ViewBag.TotalLecturers = approvedClaims.Select(c => c.LecturerName).Distinct().Count();
@@ -75,12 +75,12 @@ namespace PROG6212ST10330209.Controllers
             return View(approvedClaims);
         }
 
-        // Generate Report Action
+      
         public IActionResult GenerateReport(string reportType)
         {
             var claims = _context.Claims.ToList();
 
-            // Simple report generation - in production, use proper reporting tools
+            
             var reportData = new
             {
                 GeneratedDate = DateTime.Now,

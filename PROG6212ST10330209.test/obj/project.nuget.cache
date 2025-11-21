@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ufA9wDDl/oE=",
+  "dgSpecHash": "pf7m/pTqprg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lab_services_student\\Desktop\\PROG6212_POE_ST10330209\\PROG6212ST10330209\\PROG6212ST10330209.test\\PROG6212ST10330209.test.csproj",
+  "projectFilePath": "C:\\Users\\lab_services_student\\Desktop\\github upload\\PROG6212_POE_ST10330209\\PROG6212ST10330209.test\\PROG6212ST10330209.test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lab_services_student\\.nuget\\packages\\coverlet.collector\\6.0.2\\coverlet.collector.6.0.2.nupkg.sha512",
     "C:\\Users\\lab_services_student\\.nuget\\packages\\microsoft.codecoverage\\18.0.0\\microsoft.codecoverage.18.0.0.nupkg.sha512",
