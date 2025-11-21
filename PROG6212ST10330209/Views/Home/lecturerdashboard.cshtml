@@ -80,7 +80,7 @@ else
     <div class="card-body">
         <h4 class="card-title mb-4">Submit New Claim</h4>
 
-        <!-- Enhanced Live Calculation Display -->
+       
         <div class="row mb-4">
             <div class="col-md-8 offset-md-2">
                 <div class="card bg-light">
@@ -155,12 +155,12 @@ else
             const rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
             const total = hours * rate;
 
-            // Update display
+            
             document.getElementById('displayHours').textContent = hours;
             document.getElementById('displayRate').textContent = 'R ' + rate.toFixed(2);
             document.getElementById('displayTotal').textContent = 'R ' + total.toFixed(2);
 
-            // Show validation messages
+            
             const validationDiv = document.getElementById('validationMessages');
             let messages = [];
 
@@ -233,13 +233,13 @@ else
             return true;
         }
 
-        // Initialize calculation on page load
+        
         document.addEventListener('DOMContentLoaded', function() {
             calculateClaim();
             validateForm();
         });
 
-        // Auto-save form data to localStorage
+        
         document.getElementById('claimForm').addEventListener('input', function() {
             const formData = {
                 lecturerName: document.getElementById('lecturerName').value,
@@ -250,7 +250,7 @@ else
             localStorage.setItem('claimFormData', JSON.stringify(formData));
         });
 
-        // Load saved form data
+        
         const savedData = localStorage.getItem('claimFormData');
         if (savedData) {
             const formData = JSON.parse(savedData);
