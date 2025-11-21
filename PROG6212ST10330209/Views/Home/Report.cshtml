@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Report";
+}
+
+<h2 class="text-center mb-4">Claim System Report</h2>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">@ViewBag.ReportType Report - Generated on @DateTime.Now.ToString("MMM dd, yyyy")</h4>
+    </div>
+    <div class="card-body">
+        @if (ViewBag.ReportData != null)
+        {
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@ViewBag.ReportData.TotalClaims</h5>
+                            <p class="card-text">Total Claims</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@ViewBag.ReportData.ApprovedClaims</h5>
+                            <p class="card-text">Approved</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-dark">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@ViewBag.ReportData.PendingClaims</h5>
+                            <p class="card-text">Pending</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@ViewBag.ReportData.RejectedClaims</h5>
+                            <p class="card-text">Rejected</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6 offset-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">R @ViewBag.ReportData.TotalAmount.ToString("N2")</h3>
+                            <p class="card-text">Total Approved Amount</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (ViewBag.ReportData.ClaimsByLecturer != null)
+            {
+                <h5>Claims by Lecturer</h5>
+                <table class="table table-striped table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Lecturer Name</th>
+                            <th>Number of Claims</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lecturer in ViewBag.ReportData.ClaimsByLecturer)
+                        {
+                            <tr>
+                                <td>@lecturer.Key</td>
+                                <td>@lecturer.Value</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info text-center">
+                <h4>No report data available</h4>
+                <p>Please generate a report from the HR Dashboard.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="mt-4 text-center">
+    <button class="btn btn-primary" onclick="window.print()">Print Report</button>
+    <a class="btn btn-outline-secondary" href="@Url.Action("HRDashboard")">Back to HR Dashboard</a>
+</div>
+
+<style>
+    body {
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    @@media print {
+        .btn {
+            display: none;
+        }
+
+        .card {
+            box-shadow: none;
+            border: 1px solid #ddd;
+        }
+    }
+</style>

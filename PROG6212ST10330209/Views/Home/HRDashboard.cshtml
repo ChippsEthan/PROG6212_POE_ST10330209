@@ -1,0 +1,146 @@
+﻿@model List<Claim>
+@{
+    ViewData["Title"] = "HR Dashboard";
+}
+
+<h2 class="text-center mb-4">HR Dashboard - Claim Reports</h2>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3>@ViewBag.TotalApprovedClaims</h3>
+                <p>Approved Claims</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3>R @ViewBag.TotalApprovedAmount.ToString("N2")</h3>
+                <p>Total Approved Amount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3>@ViewBag.TotalLecturers</h3>
+                <p>Active Lecturers</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Generation Buttons -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Generate Reports</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <a href="@Url.Action("GenerateReport", new { reportType = "summary" })" class="btn btn-outline-primary w-100">
+                    Summary Report
+                </a>
+            </div>
+            <div class="col-md-3 mb-2">
+                <a href="@Url.Action("GenerateReport", new { reportType = "payments" })" class="btn btn-outline-success w-100">
+                    Payment Report
+                </a>
+            </div>
+            <div class="col-md-3 mb-2">
+                <a href="@Url.Action("GenerateReport", new { reportType = "lecturers" })" class="btn btn-outline-info w-100">
+                    Lecturer Report
+                </a>
+            </div>
+            <div class="col-md-3 mb-2">
+                <button class="btn btn-outline-warning w-100" onclick="exportToExcel()">
+                    Export to Excel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Approved Claims Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Approved Claims for Payment Processing</h5>
+    </div>
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info text-center">
+                <h4>No approved claims</h4>
+                <p>There are no approved claims ready for payment processing.</p>
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" id="claimsTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Lecturer</th>
+                            <th>Description</th>
+                            <th>Hours</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th>Submission Date</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var claim in Model)
+                        {
+                            <tr>
+                                <td>@claim.LecturerName</td>
+                                <td>@claim.Description</td>
+                                <td>@claim.HoursWorked</td>
+                                <td>R @claim.HourlyRate.ToString("N2")</td>
+                                <td><strong>R @claim.ClaimAmount.ToString("N2")</strong></td>
+                                <td>@claim.SubmissionDate.ToString("MM/dd/yyyy")</td>
+                                <td>
+                                    <span class="badge bg-success">Ready for Payment</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function exportToExcel() {
+            const table = document.getElementById('claimsTable');
+            let csv = [];
+
+            for (let i = 0; i < table.rows.length; i++) {
+                let row = [], cols = table.rows[i].querySelectorAll('td, th');
+
+                for (let j = 0; j < cols.length; j++)
+                    row.push(cols[j].innerText);
+
+                csv.push(row.join(','));
+            }
+
+            const csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+            const downloadLink = document.createElement('a');
+            downloadLink.download = 'claims_report.csv';
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+
+        setInterval(() => {
+            location.reload();
+        }, 300000);
+    </script>
+}

@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Home - CMCS";
+}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-primary mb-4">Contract Monthly Claim System</h1>
+        <p class="lead mb-4">A simple and efficient system for managing lecturer claims and approvals.</p>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-4">Get Started</h5>
+                        <div class="d-grid gap-3 d-md-flex justify-content-center">
+                            <a class="btn btn-primary btn-lg px-4" href="@Url.Action("LecturerDashboard", "Home")">
+                                Submit Claims
+                            </a>
+                            <a class="btn btn-outline-primary btn-lg px-4" href="@Url.Action("ManagerDashboard", "Home")">
+                                Manage Claims
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Submission</h5>
+                    <p class="card-text">Lecturers can easily submit claims with automatic calculation.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Easy Approval</h5>
+                    <p class="card-text">Managers can quickly review and approve claims.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Track Progress</h5>
+                    <p class="card-text">Monitor claims status and generate reports.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+    .display-4 {
+        font-weight: 600;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+        color: #6c757d;
+    }
+</style>

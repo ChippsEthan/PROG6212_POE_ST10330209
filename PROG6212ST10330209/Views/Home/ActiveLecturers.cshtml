@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Active Lecturers";
+}
+
+<h2 class="text-center mb-4">Active Lecturers</h2>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Lecturers Who Have Submitted Claims</h4>
+    </div>
+    <div class="card-body">
+        @if (ViewBag.ActiveLecturers == null || ViewBag.ActiveLecturers.Count == 0)
+        {
+            <div class="alert alert-info text-center">
+                <h4>No active lecturers</h4>
+                <p>No claims have been submitted yet.</p>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var lecturer in ViewBag.ActiveLecturers)
+                {
+                    <div class="col-md-4 mb-3">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">@lecturer</h5>
+                                <p class="card-text text-muted">Active Claim Submitter</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-4 text-center">
+                <div class="alert alert-success">
+                    <h5>Total Active Lecturers: @ViewBag.ActiveLecturers.Count</h5>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+        padding: 20px 0;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        color: #333;
+        font-weight: 600;
+    }
+</style>

@@ -1,0 +1,337 @@
+﻿@model List<Claim>
+@{
+    ViewData["Title"] = "Manager Dashboard";
+}
+
+<h2 class="text-center mb-4">Manager Dashboard</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<ul class="nav nav-tabs mb-4" id="managerTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">
+            Pending Claims
+            <span class="badge bg-warning ms-1">@Model.Count</span>
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">
+            Claims History
+            <span class="badge bg-secondary ms-1">@(ViewBag.AllClaims?.Count - Model.Count)</span>
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="managerTabsContent">
+    <!-- Pending Claims Tab -->
+    <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info text-center">
+                <h4>No pending claims to review</h4>
+                <p>All claims have been processed. Check back later for new submissions.</p>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Pending Claims for Approval</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Lecturer</th>
+                                <th>Description</th>
+                                <th>Hours</th>
+                                <th>Hourly Rate</th>
+                                <th>Amount</th>
+                                <th>Submission Date</th>
+                                <th>Document</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var claim in Model)
+                            {
+                                <tr>
+                                    <td>@claim.LecturerName</td>
+                                    <td>@claim.Description</td>
+                                    <td>@claim.HoursWorked</td>
+                                    <td>R @claim.HourlyRate.ToString("N2")</td>
+                                    <td>R @claim.ClaimAmount.ToString("N2")</td>
+                                    <td>@claim.SubmissionDate.ToString("MM/dd/yyyy")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(claim.FileName))
+                                        {
+                                            <a href="@Url.Action("DownloadDocument", new { fileName = claim.FilePath })"
+                                               class="btn btn-info btn-sm" target="_blank">
+                                                View Document
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No document</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <form method="post" asp-action="ApproveClaim" class="d-inline">
+                                            <input type="hidden" name="id" value="@claim.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm"
+                                                    onclick="return confirm('Are you sure you want to approve this claim?')">
+                                                Approve
+                                            </button>
+                                        </form>
+                                        <form method="post" asp-action="RejectClaim" class="d-inline">
+                                            <input type="hidden" name="id" value="@claim.Id" />
+                                            <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to reject this claim?')">
+                                                Reject
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Claims History Tab -->
+    <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+        @{
+            var allClaims = ViewBag.AllClaims as List<Claim> ?? new List<Claim>();
+            var historyClaims = allClaims.Where(c => c.Status != "Pending").OrderByDescending(c => c.SubmissionDate).ToList();
+        }
+
+        @if (!historyClaims.Any())
+        {
+            <div class="alert alert-info text-center">
+                <h4>No claim history yet</h4>
+                <p>Approved or rejected claims will appear here.</p>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">Claims History</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Lecturer</th>
+                                <th>Description</th>
+                                <th>Hours</th>
+                                <th>Hourly Rate</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Submission Date</th>
+                                <th>Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var claim in historyClaims)
+                            {
+                                <tr>
+                                    <td>@claim.LecturerName</td>
+                                    <td>@claim.Description</td>
+                                    <td>@claim.HoursWorked</td>
+                                    <td>R @claim.HourlyRate.ToString("N2")</td>
+                                    <td>R @claim.ClaimAmount.ToString("N2")</td>
+                                    <td>
+                                        <span class="badge @(claim.Status == "Approved" ? "bg-success" : "bg-danger")">
+                                            @claim.Status
+                                        </span>
+                                    </td>
+                                    <td>@claim.SubmissionDate.ToString("MM/dd/yyyy")</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(claim.FileName))
+                                        {
+                                            <a href="@Url.Action("DownloadDocument", new { fileName = claim.FilePath })"
+                                               class="btn btn-info btn-sm" target="_blank">
+                                                View Document
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No document</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Automated Validation Rules Section -->
+<div class="card mt-4">
+    <div class="card-header bg-warning text-dark">
+        <h5 class="mb-0">Automated Claim Validation</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="autoValidateHours" checked>
+                    <label class="form-check-label" for="autoValidateHours">
+                        Auto-validate hours (1-100)
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="autoValidateRate" checked>
+                    <label class="form-check-label" for="autoValidateRate">
+                        Auto-validate rates (R1-R500)
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="flagHighAmounts" checked>
+                    <label class="form-check-label" for="flagHighAmounts">
+                        Flag claims over R5,000
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- System Overview -->
+<div class="card mt-4">
+    <div class="card-header bg-info text-white">
+        <h5 class="mb-0">System Overview</h5>
+    </div>
+    <div class="card-body">
+        @{
+            var allClaimsStats = ViewBag.AllClaims as List<Claim> ?? new List<Claim>();
+            var pendingCount = allClaimsStats.Count(c => c.Status == "Pending");
+            var approvedCount = allClaimsStats.Count(c => c.Status == "Approved");
+            var rejectedCount = allClaimsStats.Count(c => c.Status == "Rejected");
+            var totalAmount = allClaimsStats.Where(c => c.Status == "Approved").Sum(c => c.ClaimAmount);
+        }
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body">
+                        <h3>@pendingCount</h3>
+                        <p>Pending Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h3>@approvedCount</h3>
+                        <p>Approved Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h3>@rejectedCount</h3>
+                        <p>Rejected Claims</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h3>R @totalAmount.ToString("N2")</h3>
+                        <p>Total Approved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        padding: 20px 0;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    .table {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .btn {
+        margin: 2px;
+    }
+
+    .card {
+        border: none;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-tabs .nav-link.active {
+        font-weight: bold;
+    }
+
+    .badge {
+        font-size: 0.7em;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        // Tab functionality
+        var triggerTabList = [].slice.call(document.querySelectorAll('#managerTabs button'))
+        triggerTabList.forEach(function (triggerEl) {
+            var tabTrigger = new bootstrap.Tab(triggerEl)
+            triggerEl.addEventListener('click', function (event) {
+                event.preventDefault()
+                tabTrigger.show()
+            })
+        })
+
+        // Automated validation highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.querySelector('table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const amountText = cells[4].textContent;
+                const amount = parseFloat(amountText.replace('R', '').replace(',', '').trim());
+
+                if (amount > 5000) {
+                    rows[i].style.backgroundColor = '#fff3cd';
+                    cells[4].innerHTML = '<strong>' + amountText + ' ⚠️</strong>';
+                }
+            }
+        });
+    </script>
+}
