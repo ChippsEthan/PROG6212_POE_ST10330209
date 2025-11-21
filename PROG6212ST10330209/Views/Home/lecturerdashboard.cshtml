@@ -184,7 +184,7 @@ else
             const rate = parseFloat(document.getElementById('hourlyRate').value) || 0;
             const submitButton = document.getElementById('submitButton');
 
-            // Basic validation
+            
             const isValid = lecturerName.length > 0 &&
                            description.length > 0 &&
                            hours >= 1 && hours <= 100 &&
@@ -192,7 +192,7 @@ else
 
             submitButton.disabled = !isValid;
 
-            // Update UI feedback
+           
             const inputs = ['lecturerName', 'description', 'hoursWorked', 'hourlyRate'];
             inputs.forEach(inputId => {
                 const input = document.getElementById(inputId);
